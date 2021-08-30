@@ -12,7 +12,7 @@ const mapEmail = (rawEmail) => {
   return email;
 }
 
-const listEmails = async (criteria, includes, limit = 30, offset = 0, excludeDeleted = true) => {
+const listEmails = async (criteria = {}, includes = {}, limit = 30, offset = 0, excludeDeleted = true) => {
   try {
     const { 
       emailIds, profileId, searchText, type, isVerified, isDefault,
@@ -113,6 +113,7 @@ const updateEmail = async (emailId, requestedChanges, excludeDeleted = true) => 
         id: emailId,
       },
       fields: [],
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -148,6 +149,7 @@ const deleteEmail = async (emailId, excludeDeleted = true) => {
       where: {
         id: emailId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -165,19 +167,20 @@ const deleteEmail = async (emailId, excludeDeleted = true) => {
   }
 }
 
-const setVerified = async (emailId, excludeDeleted = true) => {
+const setVerified = async (emailId, isVerified, excludeDeleted = true) => {
   try {
     const query = {
       where: {
         id: emailId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
       query.where.deleted = 0;
     }
 
-    const changes = { isVerified: true };
+    const changes = { isVerified };
     const updateResult = await Email.update(changes, query);
     return Promise.resolve(updateResult);
   } catch (error) {
@@ -196,6 +199,7 @@ const setDefault = async (emailId, profileId, excludeDeleted = true) => {
         where: {
           profileId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {
@@ -215,6 +219,7 @@ const setDefault = async (emailId, profileId, excludeDeleted = true) => {
         where: {
           id: emailId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {

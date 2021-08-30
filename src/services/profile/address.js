@@ -142,6 +142,7 @@ const updateAddress = async (addressId, requestedChanges, excludeDeleted = true)
         id: addressId,
       },
       fields: [],
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -193,6 +194,7 @@ const deleteAddress = async (addressId, excludeDeleted = true) => {
       where: {
         id: addressId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -210,19 +212,20 @@ const deleteAddress = async (addressId, excludeDeleted = true) => {
   }
 }
 
-const setVerified = async (addressId, excludeDeleted = true) => {
+const setVerified = async (addressId, isVerified, excludeDeleted = true) => {
   try {
     const query = {
       where: {
         id: addressId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
       query.where.deleted = 0;
     }
 
-    const changes = { isVerified: true };
+    const changes = { isVerified };
     const updateResult = await Address.update(changes, query);
     return Promise.resolve(updateResult);
   } catch (error) {
@@ -241,6 +244,7 @@ const setDefault = async (addressId, profileId, excludeDeleted = true) => {
         where: {
           profileId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {
@@ -260,6 +264,7 @@ const setDefault = async (addressId, profileId, excludeDeleted = true) => {
         where: {
           id: addressId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {

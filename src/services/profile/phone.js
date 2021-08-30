@@ -113,6 +113,7 @@ const updatePhone = async (phoneId, requestedChanges, excludeDeleted = true) => 
         id: phoneId,
       },
       fields: [],
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -148,6 +149,7 @@ const deletePhone = async (phoneId, excludeDeleted = true) => {
       where: {
         id: phoneId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -165,19 +167,20 @@ const deletePhone = async (phoneId, excludeDeleted = true) => {
   }
 }
 
-const setVerified = async (phoneId, excludeDeleted = true) => {
+const setVerified = async (phoneId, isVerified, excludeDeleted = true) => {
   try {
     const query = {
       where: {
         id: phoneId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
       query.where.deleted = 0;
     }
 
-    const changes = { isVerified: true };
+    const changes = { isVerified };
     const updateResult = await Phone.update(changes, query);
     return Promise.resolve(updateResult);
   } catch (error) {
@@ -196,6 +199,7 @@ const setDefault = async (phoneId, profileId, excludeDeleted = true) => {
         where: {
           profileId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {
@@ -215,6 +219,7 @@ const setDefault = async (phoneId, profileId, excludeDeleted = true) => {
         where: {
           id: phoneId,
         },
+        returning: true,
       };
 
       if (excludeDeleted) {

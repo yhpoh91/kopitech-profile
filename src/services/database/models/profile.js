@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Profile.hasMany(models.Email, { foreignKey: 'profileId', as: 'emails' });
     Profile.hasMany(models.Phone, { foreignKey: 'profileId', as: 'phones' });
-    Profile.hasMany(models.Addres, { foreignKey: 'profileId', as: 'addresses' });
+    Profile.hasMany(models.Address, { foreignKey: 'profileId', as: 'addresses' });
   };
 
   return Profile;

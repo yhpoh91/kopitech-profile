@@ -211,6 +211,7 @@ const updateProfile = async (profileId, requestedChanges, excludeDeleted = true)
         id: profileId,
       },
       fields: [],
+      returning: true,
     };
 
     if (excludeDeleted) {
@@ -262,6 +263,7 @@ const deleteProfile = async (profileId, excludeDeleted = true) => {
       where: {
         id: profileId,
       },
+      returning: true,
     };
 
     if (excludeDeleted) {
