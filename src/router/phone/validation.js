@@ -1,7 +1,7 @@
 const joi = require('joi');
 
 module.exports = {
-  listEmails: {
+  listPhones: {
     query: {
       limit: joi.number().default(30).optional(),
       offset: joi.number().default(0).optional(),
@@ -15,7 +15,7 @@ module.exports = {
     params: {},
     body: {},
   },
-  searchEmails: {
+  searchPhones: {
     query: {},
     params: {},
     body: {
@@ -23,7 +23,7 @@ module.exports = {
       offset: joi.number().default(0).optional(),
 
       criteria: joi.object({
-        emailIds: joi.array().items(joi.string()).optional(),
+        phoneIds: joi.array().items(joi.string()).optional(),
         profileId: joi.string().optional(),
         searchText: joi.string().optional(),
         type: joi.string().optional(),
@@ -32,45 +32,45 @@ module.exports = {
       }).default({}).optional(),
     },
   },
-  createEmail: {
+  createPhone: {
     query: {},
     params: {},
     body: {
       profileId: joi.string().required(),
       name: joi.string().optional(),
       type: joi.string().optional(),
-      email: joi.string().email().required(),
+      phone: joi.string().required(),
     },
   },
-  getEmail: {
+  getPhone: {
     query: {},
     params: {
-      emailId: joi.string().required(),
+      phoneId: joi.string().required(),
     },
     body: {},
   },
-  updateEmail: {
+  updatePhone: {
     query: {},
     params: {
-      emailId: joi.string().required(),
+      phoneId: joi.string().required(),
     },
     body: {
       name: joi.string().optional(),
       type: joi.string().optional(),
-      email: joi.string().email().optional(),
+      phone: joi.string().optional(),
     },
   },
-  deleteEmail: {
+  deletePhone: {
     query: {},
     params: {
-      emailId: joi.string().required(),
+      phoneId: joi.string().required(),
     },
     body: {},
   },
   setVerified: {
     query: {},
     params: {
-      emailId: joi.string().required(),
+      phoneId: joi.string().required(),
     },
     body: {
       isVerified: joi.boolean().required(),
@@ -79,7 +79,7 @@ module.exports = {
   setDefault: {
     query: {},
     params: {
-      emailId: joi.string().required(),
+      phoneId: joi.string().required(),
     },
     body: {
       profileId: joi.string().required(),

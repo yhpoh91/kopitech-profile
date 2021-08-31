@@ -7,42 +7,42 @@ const router = express.Router({ mergeParams: true });
 
 router.route('/')
   .get(
-    validate(validator.listEmails),
-    controller.listEmails,
+    validate(validator.listPhones),
+    controller.listPhones,
   )
   .post(
-    validate(validator.createEmail),
-    controller.createEmail,
+    validate(validator.createPhone),
+    controller.createPhone,
   );
 
 router.route('/search')
   .post(
-    validate(validator.searchEmails),
-    controller.searchEmails,
+    validate(validator.searchPhones),
+    controller.searchPhones,
   );
 
-router.route('/:emailId/verified')
+router.route('/:phoneId/verified')
   .post(
     validate(validator.setVerified),
   );
 
-router.route('/:emailId/default')
+router.route('/:phoneId/default')
   .post(
     validate(validator.setDefault),
   );
 
-router.route('/:emailId')
+router.route('/:phoneId')
   .get(
-    validate(validator.getEmail),
-    controller.getEmail,
+    validate(validator.getPhone),
+    controller.getPhone,
   )
   .put(
-    validate(validator.updateEmail),
-    controller.updateEmail,
+    validate(validator.updatePhone),
+    controller.updatePhone,
   )
   .delete(
-    validate(validator.deleteEmail),
-    controller.deleteEmail,
+    validate(validator.deletePhone),
+    controller.deletePhone,
   );
 
 module.exports = router;

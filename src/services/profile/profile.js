@@ -3,6 +3,35 @@ const { Op } = require('sequelize');
 const { Profile, Email, Phone, Address } = require('../database');
 const { L } = require('../logger')('Profile Service');
 
+const defaultIncludes = {
+  ...((process.env.PROFILE_LIST_INCLUDE_EMAIL || 'true') === 'true') && {
+    email: {
+      onlyVerified: (process.env.PROFILE_LIST_INCLUDE_EMAIL_ONLY_VERIFIED || 'false').toLowerCase() === 'true',
+      onlyDefault: (process.env.PROFILE_LIST_INCLUDE_EMAIL_ONLY_DEFAULT || 'false').toLowerCase() === 'true',
+      limit: parseInt(process.env.PROFILE_LIST_INCLUDE_EMAIL_LIMIT || '30', 10),
+      offset: parseInt(process.env.PROFILE_LIST_INCLUDE_EMAIL_OFFSET || '0', 10),
+    },
+  },
+  ...((process.env.PROFILE_LIST_INCLUDE_PHONE || 'true') === 'true') && {
+    phone: {
+      onlyVerified: (process.env.PROFILE_LIST_INCLUDE_PHONE_ONLY_VERIFIED || 'false').toLowerCase() === 'true',
+      onlyDefault: (process.env.PROFILE_LIST_INCLUDE_PHONE_ONLY_DEFAULT || 'false').toLowerCase() === 'true',
+      limit: parseInt(process.env.PROFILE_LIST_INCLUDE_PHONE_LIMIT || '30', 10),
+      offset: parseInt(process.env.PROFILE_LIST_INCLUDE_PHONE_OFFSET || '0', 10),
+    },
+  },
+  ...((process.env.PROFILE_LIST_INCLUDE_ADDRESS || 'true') === 'true') && {
+    address: {
+      onlyVerified: (process.env.PROFILE_LIST_INCLUDE_ADDRESS_ONLY_VERIFIED || 'false').toLowerCase() === 'true',
+      onlyDefault: (process.env.PROFILE_LIST_INCLUDE_ADDRESS_ONLY_DEFAULT || 'false').toLowerCase() === 'true',
+      limit: parseInt(process.env.PROFILE_LIST_INCLUDE_ADDRESS_LIMIT || '30', 10),
+      offset: parseInt(process.env.PROFILE_LIST_INCLUDE_ADDRESS_OFFSET || '0', 10),
+    },
+  },
+};
+console.log(defaultIncludes);
+
+
 const mapProfile = (rawProfile) => {
   if (rawProfile == null) {
     return null;
@@ -27,17 +56,14 @@ const mapProfile = (rawProfile) => {
 
 const listProfiles = async (criteria, includes, limit = 30, offset = 0, excludeDeleted = true) => {
   try {
-    const { 
-      profileIds, nameText, dateOfBirth,
-      gender, nationality, relationshipStatus,
-    } = criteria;
-    const { email: includeEmail, phone: includePhone, address: includeAddress } = includes;
+    const { profileIds, searchText, dateOfBirthStart, dateOfBirthEnd, gender } = criteria;
+    const { email: includeEmail, phone: includePhone, address: includeAddress } = includes || defaultIncludes;
 
     const query = {
       where: {},
       limit,
       offset,
-      include: []
+      include: [],
     };
 
     if (profileIds) {
@@ -122,29 +148,31 @@ const listProfiles = async (criteria, includes, limit = 30, offset = 0, excludeD
       });
     }
 
-    if (nameText) {
+    if (searchText) {
       query.where[Op.or] = [
-        { givenName: { [Op.iLike]: `%${nameText}%` } },
-        { familyName: { [Op.iLike]: `%${nameText}%` } },
-        { middleName: { [Op.iLike]: `%${nameText}%` } },
-        { nickname: { [Op.iLike]: `%${nameText}%` } },
+        { givenName: { [Op.iLike]: `%${searchText}%` } },
+        { familyName: { [Op.iLike]: `%${searchText}%` } },
+        { middleName: { [Op.iLike]: `%${searchText}%` } },
+        { nickname: { [Op.iLike]: `%${searchText}%` } },
       ];
     }
 
-    if (dateOfBirth) {
-      query.where.dateOfBirth = dateOfBirth;
+    if (dateOfBirthStart && dateOfBirthEnd) {
+      query.where.dateOfBirth = {
+        [Op.between]: [dateOfBirthStart, dateOfBirthEnd],
+      };
+    } else if (dateOfBirthStart) {
+      query.where.dateOfBirth = {
+        [Op.lt]: dateOfBirthStart,
+      };
+    } else if (dateOfBirthEnd) {
+      query.where.dateOfBirth = {
+        [Op.gte]: dateOfBirthEnd,
+      };
     }
 
     if (gender) {
       query.where.gender = gender;
-    }
-
-    if (nationality) {
-      query.where.nationality = nationality;
-    }
-
-    if (relationshipStatus) {
-      query.where.relationshipStatus = relationshipStatus;
     }
 
     if (excludeDeleted) {

@@ -64,7 +64,7 @@ const getEmail = async (req, res, next) => {
 const updateEmail = async (req, res, next) => {
   try {
     const { emailId } = req.params;
-    const result = await emailService.updateEmail(emailId, req.body);
+    const result = await emailService.updateEmail(emailId, req.body, true);
     res.status(200).send();
   } catch (error) {
     next(error);
@@ -74,7 +74,7 @@ const updateEmail = async (req, res, next) => {
 const deleteEmail = async (req, res, next) => {
   try {
     const { emailId } = req.params;
-    const result = await emailService.deleteEmail(emailId, req.body);
+    const result = await emailService.deleteEmail(emailId, true);
     res.status(200).send();
   } catch (error) {
     next(error);
