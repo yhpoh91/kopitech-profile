@@ -50,7 +50,7 @@ const getEmail = async (req, res, next) => {
     const { emailId } = req.params;
     const email = await emailService.getEmail(emailId, true);
 
-    if (email = null) {
+    if (email == null) {
       res.status(404).send(`Email does not exist`);
       return;
     }

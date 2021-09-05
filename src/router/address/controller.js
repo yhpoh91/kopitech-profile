@@ -65,7 +65,7 @@ const getAddress = async (req, res, next) => {
     const { addressId } = req.params;
     const address = await addressService.getAddress(addressId, true);
 
-    if (address = null) {
+    if (address == null) {
       res.status(404).send(`Address does not exist`);
       return;
     }

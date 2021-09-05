@@ -50,7 +50,7 @@ const getPhone = async (req, res, next) => {
     const { phoneId } = req.params;
     const phone = await phoneService.getPhone(phoneId, true);
 
-    if (phone = null) {
+    if (phone == null) {
       res.status(404).send(`Phone does not exist`);
       return;
     }
