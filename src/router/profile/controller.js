@@ -55,7 +55,7 @@ const getProfile = async (req, res, next) => {
     const { profileId } = req.params;
     const profile = await profileService.getProfile(profileId, true);
 
-    if (profile = null) {
+    if (profile == null) {
       res.status(404).send(`Profile does not exist`);
       return;
     }
