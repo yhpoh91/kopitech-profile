@@ -223,7 +223,7 @@ const setDefault = async (emailId, profileId, excludeDeleted = true) => {
       };
 
       if (excludeDeleted) {
-        query.where.deleted = 0;
+        query2.where.deleted = 0;
       }
 
       const changes2 = { isDefault: true };
