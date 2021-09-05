@@ -151,6 +151,15 @@ const updateAddress = async (addressId, requestedChanges, excludeDeleted = true)
 
     const changes = {};
 
+
+    if (requestedChanges.name != null) {
+      changes.name = requestedChanges.name || null;
+      query.fields.push('name');
+    }
+    if (requestedChanges.type != null) {
+      changes.type = requestedChanges.type || null;
+      query.fields.push('type');
+    }
     if (requestedChanges.address1 != null) {
       changes.address1 = requestedChanges.address1 || null;
       query.fields.push('address1');
