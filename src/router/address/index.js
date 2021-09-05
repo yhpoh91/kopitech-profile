@@ -33,6 +33,7 @@ router.route('/:addressId/verified')
     authenticate,
     authorize(['profile.address.update']),
     validate(validator.setVerified),
+    controller.setVerified,
   );
 
 router.route('/:addressId/default')
@@ -40,6 +41,7 @@ router.route('/:addressId/default')
     authenticate,
     authorize(['profile.address.update']),
     validate(validator.setDefault),
+    controller.setDefault,
   );
 
 router.route('/:addressId')

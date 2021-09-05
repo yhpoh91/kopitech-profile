@@ -35,6 +35,7 @@ router.route('/:phoneId/verified')
     authenticate,
     authorize(['profile.phone.update']),
     validate(validator.setVerified),
+    controller.setVerified,
   );
 
 router.route('/:phoneId/default')
@@ -42,6 +43,7 @@ router.route('/:phoneId/default')
     authenticate,
     authorize(['profile.phone.update']),
     validate(validator.setDefault),
+    controller.setDefault,
   );
 
 router.route('/:phoneId')

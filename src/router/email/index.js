@@ -35,6 +35,7 @@ router.route('/:emailId/verified')
     authenticate,
     authorize(['profile.email.update']),
     validate(validator.setVerified),
+    controller.setVerified,
   );
 
 router.route('/:emailId/default')
@@ -42,6 +43,7 @@ router.route('/:emailId/default')
     authenticate,
     authorize(['profile.email.update']),
     validate(validator.setDefault),
+    controller.setDefault,
   );
 
 router.route('/:emailId')
