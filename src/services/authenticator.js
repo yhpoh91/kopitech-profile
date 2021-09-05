@@ -1,4 +1,4 @@
-const { L } = require('../logger')('Authenticator');
+const { L } = require('./logger')('Authenticator');
 
 const authenticate = async (req, res, next) => {
   try {
