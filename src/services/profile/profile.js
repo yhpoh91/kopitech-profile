@@ -139,7 +139,7 @@ const listProfiles = async (criteria, includes, limit = 30, offset = 0, excludeD
       }
 
       query.include.push({
-        model: Phone,
+        model: Address,
         foreignKey: 'profileId',
         as: 'addresses',
         where: addressWhere,
