@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { Op } = require('sequelize');
 const { Profile, Email, Phone, Address } = require('../database');
-const { L } = require('../logger')('Profile Service');
+const { L } = require('kopitech-logger')('Profile Service');
 
 const defaultIncludes = {
   ...((process.env.PROFILE_LIST_INCLUDE_EMAIL || 'true') === 'true') && {

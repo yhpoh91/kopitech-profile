@@ -1,5 +1,5 @@
 const phoneService = require('../../services/profile/phone');
-const { L } = require('../../services/logger')('Phone Router');
+const { L } = require('kopitech-logger')('Phone Router');
 
 const listPhones = async (req, res, next) => {
   try {

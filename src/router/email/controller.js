@@ -1,5 +1,5 @@
 const emailService = require('../../services/profile/email');
-const { L } = require('../../services/logger')('Email Router');
+const { L } = require('kopitech-logger')('Email Router');
 
 const listEmails = async (req, res, next) => {
   try {

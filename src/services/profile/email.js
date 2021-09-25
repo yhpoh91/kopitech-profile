@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { Op } = require('sequelize');
 const { Email } = require('../database');
-const { L } = require('../logger')('Profile.Email Service');
+const { L } = require('kopitech-logger')('Profile.Email Service');
 
 const mapEmail = (rawEmail) => {
   if (rawEmail == null) {

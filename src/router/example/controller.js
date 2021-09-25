@@ -1,4 +1,4 @@
-const { L } = require('../../services/logger')('Example Router');
+const { L } = require('kopitech-logger')('Example Router');
 
 const doSomething = async (req, res, next) => {
   try {

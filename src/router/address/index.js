@@ -3,7 +3,7 @@ const validate = require('express-validation');
 const validator = require('./validation');
 const controller = require('./controller');
 
-const { authenticate } = require('../../services/authenticator');
+const { expressAuthenticate: authenticate } = require('kopitech-authentication-client');
 const { authorize } = require('../../services/authorizer');
 
 const router = express.Router({ mergeParams: true });

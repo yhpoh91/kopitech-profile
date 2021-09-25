@@ -1,5 +1,5 @@
 const addressService = require('../../services/profile/address');
-const { L } = require('../../services/logger')('Address Router');
+const { L } = require('kopitech-logger')('Address Router');
 
 const listAddresses = async (req, res, next) => {
   try {

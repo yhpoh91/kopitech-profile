@@ -1,5 +1,5 @@
 const profileService = require('../../services/profile/profile');
-const { L } = require('../../services/logger')('Profile Router');
+const { L } = require('kopitech-logger')('Profile Router');
 
 const listProfiles = async (req, res, next) => {
   try {

@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { Op } = require('sequelize');
 const { Phone } = require('../database');
-const { L } = require('../logger')('Profile.Phone Service');
+const { L } = require('kopitech-logger')('Profile.Phone Service');
 
 const mapPhone = (rawPhone) => {
   if (rawPhone == null) {

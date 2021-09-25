@@ -6,7 +6,7 @@ const phoneRouter = require('./phone');
 const addressRouter = require('./address');
 const profileRouter = require('./profile');
 
-const { L } = require('../services/logger')('Global Router');
+const { L } = require('kopitech-logger')('Global Router');
 
 const router = express.Router({ mergeParams: true });
 

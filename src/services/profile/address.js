@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { Op } = require('sequelize');
 const { Address } = require('../database');
-const { L } = require('../logger')('Profile.Address Service');
+const { L } = require('kopitech-logger')('Profile.Address Service');
 
 const mapAddress = (rawAddress) => {
   if (rawAddress == null) {
