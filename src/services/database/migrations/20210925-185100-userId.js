@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const addUserIdColumn = () => queryInterface.addColumn('Users', 'userId', {
+    const addUserIdColumn = () => queryInterface.addColumn('Profiles', 'userId', {
       type: Sequelize.STRING(45),
       allowNull: false,
     });
@@ -9,7 +9,7 @@ module.exports = {
       .then(addUserIdColumn);
   },
   down: (queryInterface) => {
-    const removeUserIdColumn = () => queryInterface.removeColumn('Users', 'userId');
+    const removeUserIdColumn = () => queryInterface.removeColumn('Profiles', 'userId');
     return Promise.resolve()
       .then(removeUserIdColumn);
   },
