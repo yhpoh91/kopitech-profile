@@ -5,13 +5,14 @@ const listProfiles = async (req, res, next) => {
   try {
     const {
       limit, offset,
-      profileId, searchText,
+      userId, profileId, searchText,
       dateOfBirthStart, dateOfBirthEnd,
       gender,
     } = req.query;
 
     const criteria = {
-      profileId,
+      userIds: [userId],
+      profileIds: [profileId],
       searchText,
       dateOfBirthStart,
       dateOfBirthEnd,
@@ -37,11 +38,12 @@ const searchProfiles = async (req, res, next) => {
 const createProfile = async (req, res, next) => {
   try {
     const {
+      userId,
       givenName, familyName, middleName,
       nickname, dateOfBirth, gender, picture,
     } = req.body;
     const newProfile = await profileService.createProfile(
-      givenName, familyName, middleName, nickname,
+      userId, givenName, familyName, middleName, nickname,
       dateOfBirth, gender, picture,
     );
     res.status(201).json(newProfile);

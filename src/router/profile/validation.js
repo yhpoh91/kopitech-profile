@@ -6,6 +6,7 @@ module.exports = {
       limit: joi.number().default(30).optional(),
       offset: joi.number().default(0).optional(),
 
+      userId: joi.string().optional(),
       profileId: joi.string().optional(),
       searchText: joi.string().optional(),
       dateOfBirthStart: joi.date().optional(),
@@ -31,6 +32,7 @@ module.exports = {
 
 
       criteria: joi.object({
+        userIds: joi.array().items(joi.string()).optional(),
         profileIds: joi.array().items(joi.string()).optional(),
         searchText: joi.string().optional(),
         dateOfBirthStart: joi.date().optional(),
@@ -72,6 +74,7 @@ module.exports = {
     query: {},
     params: {},
     body: {
+      userId: joi.string().required(),
       givenName: joi.string().optional(),
       familyName: joi.string().optional(),
       middleName: joi.string().optional(),

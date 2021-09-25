@@ -29,7 +29,6 @@ const defaultIncludes = {
     },
   },
 };
-console.log(defaultIncludes);
 
 
 const mapProfile = (rawProfile) => {
@@ -56,7 +55,7 @@ const mapProfile = (rawProfile) => {
 
 const listProfiles = async (criteria, includes, limit = 30, offset = 0, excludeDeleted = true) => {
   try {
-    const { profileIds, searchText, dateOfBirthStart, dateOfBirthEnd, gender } = criteria;
+    const { userIds, profileIds, searchText, dateOfBirthStart, dateOfBirthEnd, gender } = criteria;
     const { email: includeEmail, phone: includePhone, address: includeAddress } = includes || defaultIncludes;
 
     const query = {
@@ -68,6 +67,10 @@ const listProfiles = async (criteria, includes, limit = 30, offset = 0, excludeD
 
     if (profileIds) {
       query.where.id = profileIds;
+    }
+
+    if (userIds) {
+      query.where.userId = userIds;
     }
 
     if (includeEmail != null) {
@@ -208,6 +211,7 @@ const getProfile = async (profileId, excludeDeleted = true) => {
 };
 
 const createProfile = async (
+  userId,
   givenName, familyName,
   middleName, nickname,
   dateOfBirth, gender, picture,
@@ -215,6 +219,7 @@ const createProfile = async (
   try {
     const rawProfile = await Profile.create({
       id: uuid(),
+      userId,
       givenName,
       familyName,
       middleName,
